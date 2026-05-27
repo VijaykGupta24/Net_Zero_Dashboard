@@ -10,6 +10,10 @@ describe('calculateSavings', () => {
     selectedShading: "",
     selectedLighting: "",
     selectedAirConditioning: "",
+    selectedPartitionWall: "",
+    wwr: 40,
+    externalWindowOpening: 20,
+    setpointTemperature: 24,
   };
 
   it('should return baseline values when no selections are made', () => {
@@ -23,8 +27,9 @@ describe('calculateSavings', () => {
 
   it('should calculate correct savings for the Best Combination', () => {
     const bestSelections: Selections = {
+      ...baselineSelections,
       selectedOrientation: "North", // +2%
-      selectedWall: "AAC", // +15%
+      selectedWall: "AAC Block", // +15%
       selectedRoof: "RRC + Insulation", // +20%
       selectedGlass: "Double Glazing(12mm)", // +15%
       selectedShading: "5 Ft Shading", // +10%
@@ -65,7 +70,7 @@ describe('calculateSavings', () => {
     const flyAshResult = calculateSavings({ ...baselineSelections, selectedWall: "Fly Ash Brick" });
     expect(flyAshResult.pct).toBe(8);
 
-    const aacResult = calculateSavings({ ...baselineSelections, selectedWall: "AAC" });
+    const aacResult = calculateSavings({ ...baselineSelections, selectedWall: "AAC Block" });
     expect(aacResult.pct).toBe(15);
   });
 
@@ -74,7 +79,7 @@ describe('calculateSavings', () => {
     const extremeSelections: Selections = {
         ...baselineSelections,
         selectedRoof: "RRC + Insulation", // 20%
-        selectedWall: "AAC", // 15%
+        selectedWall: "AAC Block", // 15%
         selectedAirConditioning: "5 Star AC", // 18%
         selectedGlass: "Double Glazing(12mm)", // 15%
         selectedLighting: "LED", // 12%

@@ -6,6 +6,10 @@ export interface Selections {
   selectedShading: string;
   selectedLighting: string;
   selectedAirConditioning: string;
+  selectedPartitionWall: string;
+  wwr: number;
+  externalWindowOpening: number;
+  setpointTemperature: number;
 }
 
 export interface SavingsResult {
@@ -25,6 +29,10 @@ export const calculateSavings = (selections: Selections): SavingsResult => {
     selectedShading,
     selectedLighting,
     selectedAirConditioning,
+    selectedPartitionWall,
+    wwr,
+    externalWindowOpening,
+    setpointTemperature,
   } = selections;
 
   let pct = 0;
@@ -32,10 +40,18 @@ export const calculateSavings = (selections: Selections): SavingsResult => {
   if (selectedOrientation === "East") pct += 1;
   if (selectedOrientation === "South") pct += 0.5;
 
+  // Wall contributions
   if (selectedWall === "Fly Ash Brick") pct += 8;
-  if (selectedWall === "AAC") pct += 15;
+  if (selectedWall === "Fly Ash + Insulation") pct += 12;
+  if (selectedWall === "Hollow Brick") pct += 6;
+  if (selectedWall === "AAC + Insulation") pct += 18;
+  if (selectedWall === "Concrete Brick") pct += 3;
+  if (selectedWall === "AAC Block") pct += 15;
 
-  if (selectedRoof === "RRC + Tiles + Chips") pct += 10;
+  // Roof contributions
+  if (selectedRoof === "RRC + Foam Concrete") pct += 8;
+  if (selectedRoof === "RRC + Marble") pct += 10;
+  if (selectedRoof === "RRC + Insulation + Tile") pct += 18;
   if (selectedRoof === "RRC + Insulation") pct += 20;
 
   if (selectedGlass === "Toughened Glass") pct += 5;
@@ -47,6 +63,19 @@ export const calculateSavings = (selections: Selections): SavingsResult => {
   if (selectedLighting === "LED") pct += 12;
 
   if (selectedAirConditioning === "5 Star AC") pct += 18;
+
+  // Partition wall contributions
+  if (selectedPartitionWall === "AAC") pct += 3;
+  if (selectedPartitionWall === "Fly Ash") pct += 2;
+
+  // WWR: lower WWR saves more energy (baseline assumed at 40%)
+  if (wwr < 40) pct += (40 - wwr) * 0.1;
+
+  // External window opening contribution
+  if (externalWindowOpening > 20) pct += (externalWindowOpening - 20) * 0.05;
+
+  // Setpoint temperature: higher setpoint saves energy (baseline 24°C)
+  if (setpointTemperature > 24) pct += (setpointTemperature - 24) * 1.5;
 
   const baseEpi = 180;
   const currentEpi = Math.max(50, Math.round(baseEpi * (1 - pct / 100)));
