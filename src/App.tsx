@@ -217,7 +217,6 @@ export default function App() {
           <AnalyticsPanel 
             energySavings={energySavings}
             co2Savings={co2Savings}
-            moneySavings={moneySavings}
           />
         </div>
 

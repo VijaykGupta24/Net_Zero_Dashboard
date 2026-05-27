@@ -80,20 +80,22 @@ const Sidebar: React.FC<SidebarProps> = ({
     airConditioningOpen,
   } = openStates;
 
+  // Exclusive accordion: opening one closes all others
   const toggleOpen = (key: keyof typeof openStates) => {
+    const allClosed = Object.keys(openStates).reduce((acc, k) => {
+      acc[k as keyof typeof openStates] = false;
+      return acc;
+    }, {} as typeof openStates);
+
     setOpenStates({
-      ...openStates,
-      [key]: !openStates[key]
+      ...allClosed,
+      [key]: !openStates[key],
     });
   };
 
+  // Selection no longer closes the accordion — it stays open
   const onSelect = (key: keyof Selections, value: string) => {
     handleSelect(key, value);
-    const openStateKey = (key.replace('selected', '').charAt(0).toLowerCase() + key.replace('selected', '').slice(1) + 'Open') as keyof typeof openStates;
-    setOpenStates({
-      ...openStates,
-      [openStateKey]: false
-    });
   };
 
   return (
