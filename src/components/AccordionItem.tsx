@@ -15,6 +15,7 @@ interface AccordionItemProps {
   onSelect: (value: string) => void;
   groupName: string;
   iconSize?: string;
+  extraContent?: React.ReactNode;
 }
 
 const AccordionItem: React.FC<AccordionItemProps> = ({ 
@@ -26,7 +27,8 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   selectedValue, 
   onSelect, 
   groupName,
-  iconSize = "w-8 h-8"
+  iconSize = "w-8 h-8",
+  extraContent
 }) => {
   return (
     <div className="bg-white rounded-2xl shadow-md border-2 border-black hover:border-cyan-300 transition-all duration-300 overflow-hidden ease-in-out hover:scale-105 hover:-translate-y-1 hover:shadow-2xl cursor-pointer">
@@ -76,6 +78,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
               </label>
             ))}
           </div>
+          {extraContent}
         </div>
       )}
     </div>

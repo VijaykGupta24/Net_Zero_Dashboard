@@ -14,6 +14,10 @@ export default function App() {
     selectedShading: "",
     selectedLighting: "",
     selectedAirConditioning: "",
+    selectedPartitionWall: "",
+    wwr: 40,
+    externalWindowOpening: 20,
+    setpointTemperature: 24,
   });
 
   // Menu open states
@@ -25,6 +29,7 @@ export default function App() {
     shadingOpen: false,
     lightingOpen: false,
     airConditioningOpen: false,
+    partitionWallOpen: false,
   });
 
   // Mobile menu/sidebar open state
@@ -51,13 +56,24 @@ export default function App() {
     ],
     roofOptions: [
       { name: "RRC", icon: "/icons/rrc.svg" },
-      { name: "RRC + Tiles + Chips", icon: "/icons/rrc tiles chips.svg" },
+      { name: "RRC + Foam Concrete", icon: "/icons/rrc.svg" },
+      { name: "RRC + Marble", icon: "/icons/rrc tiles chips.svg" },
+      { name: "RRC + Insulation + Tile", icon: "/icons/rrc insulation.svg" },
       { name: "RRC + Insulation", icon: "/icons/rrc insulation.svg" },
     ],
     wallOptions: [
-      { name: "Red Brick", icon: "/icons/red brick.svg" },
       { name: "Fly Ash Brick", icon: "/icons/fly ash brick.svg" },
+      { name: "Fly Ash + Insulation", icon: "/icons/fly ash brick.svg" },
+      { name: "Hollow Brick", icon: "/icons/red brick.svg" },
+      { name: "AAC + Insulation", icon: "/icons/aac.svg" },
+      { name: "Red Brick", icon: "/icons/red brick.svg" },
+      { name: "Concrete Brick", icon: "/icons/fly ash brick.svg" },
+      { name: "AAC Block", icon: "/icons/aac.svg" },
+    ],
+    partitionWallOptions: [
+      { name: "Fly Ash", icon: "/icons/fly ash brick.svg" },
       { name: "AAC", icon: "/icons/aac.svg" },
+      { name: "Red Brick", icon: "/icons/red brick.svg" },
     ],
     orientationOptions: [
       { name: "North", icon: "/icons/north.svg" },
@@ -67,21 +83,25 @@ export default function App() {
     ],
   };
 
-  const { energySavings, co2Savings, moneySavings, currentEpi } = calculateSavings(selections);
+  const { energySavings, co2Savings, currentEpi } = calculateSavings(selections);
 
-  const handleSelect = (key: keyof Selections, value: string) => {
+  const handleSelect = (key: keyof Selections, value: string | number) => {
     setSelections(prev => ({ ...prev, [key]: value }));
   };
 
   const handleBestCombination = () => {
     setSelections({
       selectedOrientation: "North",
-      selectedWall: "AAC",
+      selectedWall: "AAC + Insulation",
       selectedRoof: "RRC + Insulation",
       selectedGlass: "Double Glazing(12mm)",
       selectedShading: "5 Ft Shading",
       selectedLighting: "LED",
       selectedAirConditioning: "5 Star AC",
+      selectedPartitionWall: "AAC",
+      wwr: 20,
+      externalWindowOpening: 50,
+      setpointTemperature: 26,
     });
 
     setOpenStates({
@@ -92,6 +112,7 @@ export default function App() {
       shadingOpen: false,
       lightingOpen: false,
       airConditioningOpen: false,
+      partitionWallOpen: false,
     });
   };
 
@@ -104,6 +125,10 @@ export default function App() {
       selectedShading: "",
       selectedLighting: "",
       selectedAirConditioning: "",
+      selectedPartitionWall: "",
+      wwr: 40,
+      externalWindowOpening: 20,
+      setpointTemperature: 24,
     });
 
     setOpenStates({
@@ -114,6 +139,7 @@ export default function App() {
       shadingOpen: false,
       lightingOpen: false,
       airConditioningOpen: false,
+      partitionWallOpen: false,
     });
   };
 

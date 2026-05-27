@@ -1,5 +1,6 @@
 import React from 'react';
 import AccordionItem from './AccordionItem';
+import SliderControl from './SliderControl';
 import { Selections } from '../utils/calculations';
 
 interface Option {
@@ -16,6 +17,7 @@ interface SidebarProps {
     shadingOptions: Option[];
     lightingOptions: Option[];
     airConditioningOptions: Option[];
+    partitionWallOptions: Option[];
   };
   selections: Selections;
   openStates: {
@@ -26,6 +28,7 @@ interface SidebarProps {
     shadingOpen: boolean;
     lightingOpen: boolean;
     airConditioningOpen: boolean;
+    partitionWallOpen: boolean;
   };
   setOpenStates: React.Dispatch<React.SetStateAction<{
     orientationOpen: boolean;
@@ -35,8 +38,9 @@ interface SidebarProps {
     shadingOpen: boolean;
     lightingOpen: boolean;
     airConditioningOpen: boolean;
+    partitionWallOpen: boolean;
   }>>;
-  handleSelect: (key: keyof Selections, value: string) => void;
+  handleSelect: (key: keyof Selections, value: string | number) => void;
   handleBestCombination: () => void;
   handleResetBaseline: () => void;
 }
@@ -58,6 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     shadingOptions,
     lightingOptions,
     airConditioningOptions,
+    partitionWallOptions,
   } = options;
 
   const {
@@ -68,6 +73,10 @@ const Sidebar: React.FC<SidebarProps> = ({
     selectedShading,
     selectedLighting,
     selectedAirConditioning,
+    selectedPartitionWall,
+    wwr,
+    externalWindowOpening,
+    setpointTemperature,
   } = selections;
 
   const {
@@ -78,6 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     shadingOpen,
     lightingOpen,
     airConditioningOpen,
+    partitionWallOpen,
   } = openStates;
 
   // Exclusive accordion: opening one closes all others
@@ -93,8 +103,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     });
   };
 
-  // Selection no longer closes the accordion — it stays open
-  const onSelect = (key: keyof Selections, value: string) => {
+  // Selection updates state directly without closing the accordion
+  const onSelect = (key: keyof Selections, value: string | number) => {
     handleSelect(key, value);
   };
 
@@ -120,6 +130,17 @@ const Sidebar: React.FC<SidebarProps> = ({
         selectedValue={selectedWall}
         onSelect={(val) => onSelect('selectedWall', val)}
         groupName="wall"
+      />
+
+      <AccordionItem
+        title="Partition Wall"
+        icon="/icons/wall.svg"
+        isOpen={partitionWallOpen}
+        onToggle={() => toggleOpen('partitionWallOpen')}
+        options={partitionWallOptions}
+        selectedValue={selectedPartitionWall}
+        onSelect={(val) => onSelect('selectedPartitionWall', val)}
+        groupName="partitionWall"
       />
 
       <AccordionItem
@@ -180,6 +201,49 @@ const Sidebar: React.FC<SidebarProps> = ({
         onSelect={(val) => onSelect('selectedAirConditioning', val)}
         groupName="airConditioning"
         iconSize="w-7 h-7"
+        extraContent={
+          <div className="mt-4 pt-4 border-t border-gray-300">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-black font-semibold text-sm">Setpoint Temperature</span>
+              <span className="text-lg font-bold text-cyan-600">{setpointTemperature}°C</span>
+            </div>
+            <input
+              type="range"
+              min={20}
+              max={30}
+              value={setpointTemperature}
+              onChange={(e) => onSelect('setpointTemperature', Number(e.target.value))}
+              className="w-full h-2 rounded-full appearance-none cursor-pointer slider-cyan bg-gray-200"
+              style={{
+                background: `linear-gradient(to right, #06b6d4 0%, #06b6d4 ${((setpointTemperature - 20) / 10) * 100}%, #e5e7eb ${((setpointTemperature - 20) / 10) * 100}%, #e5e7eb 100%)`,
+              }}
+            />
+            <div className="flex justify-between mt-1 text-xs text-gray-500 font-medium">
+              <span>20°C</span>
+              <span>30°C</span>
+            </div>
+          </div>
+        }
+      />
+
+      <SliderControl
+        label="Window to Wall Ratio"
+        icon="/icons/glass5.svg"
+        value={wwr}
+        min={0}
+        max={100}
+        unit="%"
+        onChange={(val) => onSelect('wwr', val)}
+      />
+
+      <SliderControl
+        label="External Window Opening"
+        icon="/icons/shading.svg"
+        value={externalWindowOpening}
+        min={0}
+        max={100}
+        unit="%"
+        onChange={(val) => onSelect('externalWindowOpening', val)}
       />
 
       <div className="mt-auto space-y-4 pt-8 pb-4">
