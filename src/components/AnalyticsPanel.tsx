@@ -20,7 +20,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ energySavings, co2Savin
 
       {/* CO2 Savings */}
       <div className="bg-pink-400 w-[130px] h-[130px] min-w-[130px] min-h-[130px] sm:w-[170px] sm:h-[170px] sm:min-w-[170px] sm:min-h-[170px] rounded-full border-4 border-white shadow-lg flex-shrink-0 flex flex-col items-center justify-center text-white transition-all duration-300 ease-in-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl cursor-pointer">
-        <img src="/icons/carbon.svg" alt="carbon" className="w-8 h-8 sm:w-13 sm:h-13" />
+        <img src="/icons/carbon.svg" alt="carbon" className="w-8 h-8 sm:w-12 sm:h-12" />
         <h1 className="text-xl sm:text-3xl md:text-4xl tracking-tight font-bold">
           {co2Savings > 0 ? `${co2Savings.toLocaleString()}` : "xxxx"}
         </h1>

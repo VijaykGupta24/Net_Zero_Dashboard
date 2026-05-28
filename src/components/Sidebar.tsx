@@ -134,7 +134,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       <AccordionItem
         title="Partition Wall"
-        icon="/icons/wall.svg"
+        icon="/icons/partition wall.svg"
         isOpen={partitionWallOpen}
         onToggle={() => toggleOpen('partitionWallOpen')}
         options={partitionWallOptions}
@@ -152,12 +152,12 @@ const Sidebar: React.FC<SidebarProps> = ({
         selectedValue={selectedRoof}
         onSelect={(val) => onSelect('selectedRoof', val)}
         groupName="roof"
-        iconSize="w-7 h-7"
+        iconSize="w-8 h-8"
       />
 
       <AccordionItem
         title="Glass"
-        icon="/icons/glass5.svg"
+        icon="/icons/glass.svg"
         isOpen={glassOpen}
         onToggle={() => toggleOpen('glassOpen')}
         options={glassOptions}
@@ -228,17 +228,18 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       <SliderControl
         label="Window to Wall Ratio"
-        icon="/icons/glass5.svg"
+        icon="/icons/wwr.svg"
         value={wwr}
         min={0}
         max={100}
         unit="%"
         onChange={(val) => onSelect('wwr', val)}
+        iconSize="w-9 h-9"
       />
 
       <SliderControl
         label="External Window Opening"
-        icon="/icons/shading.svg"
+        icon="/icons/ewr.svg"
         value={externalWindowOpening}
         min={0}
         max={100}
