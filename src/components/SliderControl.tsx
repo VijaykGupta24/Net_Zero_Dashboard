@@ -8,6 +8,7 @@ interface SliderControlProps {
   max: number;
   unit: string;
   onChange: (value: number) => void;
+  iconSize?: string;
 }
 
 const SliderControl: React.FC<SliderControlProps> = ({
@@ -18,6 +19,7 @@ const SliderControl: React.FC<SliderControlProps> = ({
   max,
   unit,
   onChange,
+  iconSize = "w-7 h-7",
 }) => {
   const percentage = ((value - min) / (max - min)) * 100;
 
@@ -25,7 +27,7 @@ const SliderControl: React.FC<SliderControlProps> = ({
     <div className="bg-white rounded-2xl shadow-md border-2 border-black hover:border-cyan-300 transition-all duration-300 overflow-hidden ease-in-out hover:scale-105 hover:-translate-y-1 hover:shadow-2xl p-5">
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
-        <img src={icon} alt={label} className="w-7 h-7" />
+        <img src={icon} alt={label} className={iconSize} />
         <h2 className="text-lg font-bold text-black">{label}</h2>
       </div>
 
