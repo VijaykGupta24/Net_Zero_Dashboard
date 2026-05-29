@@ -232,10 +232,12 @@ export default function App() {
               </div>
 
               {/* Visualization Area */}
-              <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl tracking-tight font-bold text-gray-400 text-center">
-                  3D Building Area
-                </h1>
+              <div className="flex-1 bg-white p-6 flex items-center justify-center relative overflow-hidden group">
+                <img 
+                  src="/icons/building.svg" 
+                  alt="Building 3D Visualization" 
+                  className="max-w-full max-h-full object-contain transition-transform duration-700 ease-out group-hover:scale-105 select-none"
+                />
               </div>
             </div>
           </div>
