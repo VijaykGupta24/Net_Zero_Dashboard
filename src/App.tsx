@@ -56,22 +56,22 @@ export default function App() {
     ],
     roofOptions: [
       { name: "RRC", icon: "/icons/rrc.svg" },
-      { name: "RRC + Foam Concrete", icon: "/icons/rrcfoam.svg" },
-      { name: "RRC + Marble", icon: "/icons/rrcmarble.svg" },
-      { name: "RRC + Insulation + Tile", icon: "/icons/rrcintile.svg" },
-      { name: "RRC + Insulation", icon: "/icons/rrcins.svg" },
+      { name: "RRC + Foam Concrete", icon: "/icons/rrc.svg" },
+      { name: "RRC + Marble", icon: "/icons/rrc tiles chips.svg" },
+      { name: "RRC + Insulation + Tile", icon: "/icons/rrc insulation.svg" },
+      { name: "RRC + Insulation", icon: "/icons/rrc insulation.svg" },
     ],
     wallOptions: [
-      { name: "Fly Ash Brick", icon: "/icons/flyash.svg" },
-      { name: "Fly Ash + Insulation", icon: "/icons/flyins.svg" },
-      { name: "Hollow Brick", icon: "/icons/hollow.svg" },
-      { name: "AAC + Insulation", icon: "/icons/aacins.svg" },
+      { name: "Fly Ash Brick", icon: "/icons/fly ash brick.svg" },
+      { name: "Fly Ash + Insulation", icon: "/icons/fly ash brick.svg" },
+      { name: "Hollow Brick", icon: "/icons/red brick.svg" },
+      { name: "AAC + Insulation", icon: "/icons/aac.svg" },
       { name: "Red Brick", icon: "/icons/red brick.svg" },
-      { name: "Concrete Brick", icon: "/icons/concrete.svg" },
+      { name: "Concrete Brick", icon: "/icons/fly ash brick.svg" },
       { name: "AAC Block", icon: "/icons/aac.svg" },
     ],
     partitionWallOptions: [
-      { name: "Fly Ash Brick", icon: "/icons/flyash.svg" },
+      { name: "Fly Ash", icon: "/icons/fly ash brick.svg" },
       { name: "AAC", icon: "/icons/aac.svg" },
       { name: "Red Brick", icon: "/icons/red brick.svg" },
     ],
@@ -83,7 +83,7 @@ export default function App() {
     ],
   };
 
-  const { energySavings, co2Savings, currentEpi, pct } = calculateSavings(selections);
+  const { energySavings, co2Savings, currentEpi } = calculateSavings(selections);
 
   const handleSelect = (key: keyof Selections, value: string | number) => {
     setSelections(prev => ({ ...prev, [key]: value }));
@@ -247,7 +247,7 @@ export default function App() {
         </div>
 
         {/* Bottom EPI Section */}
-        <EPIMeter currentEpi={currentEpi} savingsPercentage={pct} baselineValue={150} />
+        <EPIMeter currentEpi={currentEpi} />
       </div>
     </main>
   );
